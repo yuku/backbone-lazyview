@@ -5,7 +5,7 @@
  *
  * Licensed under the MIT license.
  * 
- * Version: 0.0.4
+ * Version: 0.0.5
  */
 ;(function ($, _, Backbone) {
   containers = {};
