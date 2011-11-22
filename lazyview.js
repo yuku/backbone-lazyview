@@ -5,12 +5,12 @@
  *
  * Licensed under the MIT license.
  * 
- * Version: 0.0.3
+ * Version: 0.0.4
  */
 ;(function ($, _, Backbone) {
-  var containers = {};
+  containers = {};
 
-  var Backbone.LazyView = function (options) {
+  Backbone.LazyView = function (options) {
     var settings = {
       threshold: 0,
       filurelimit: 0,
@@ -21,6 +21,7 @@
 
     if (!(settings.container in containers)) {
       containers[settings.container] = [];
+
       // Fire one scroll event per scroll.
       $(settings.container).bind("scroll", function (ev) {
         var views = containers[this],
@@ -32,10 +33,10 @@
           }
         });
         containers[this] = _.filter(views, function (view) {
-          return _.indexOf(views, view) != -1;
+          return _.indexOf(appeared, view) == -1;
         });
-        if (!containers[this]) {
-          this.unbind("scroll");
+        if (containers[this].length == 0) {
+          $(this).unbind("scroll");
         }
       });
     }
