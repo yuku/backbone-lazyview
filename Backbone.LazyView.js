@@ -5,7 +5,7 @@
  *
  * Licensed under the MIT license.
  * 
- * Version: 0.0.1
+ * Version: 0.0.2
  */
 ;(function ($, _, Backbone) {
   var Backbone.LazyView = function (options) {
