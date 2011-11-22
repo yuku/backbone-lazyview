@@ -5,11 +5,41 @@
  *
  * Licensed under the MIT license.
  * 
- * Version: 0.0.2
+ * Version: 0.0.3
  */
 ;(function ($, _, Backbone) {
+  var containers = {};
+
   var Backbone.LazyView = function (options) {
+    var settings = {
+      threshold: 0,
+      filurelimit: 0,
+      container: window
+    };
+    _.extend(settings, options);
     Backbone.View.call(this, options);
+
+    if (!(settings.container in containers)) {
+      containers[settings.container] = [];
+      // Fire one scroll event per scroll.
+      $(settings.container).bind("scroll", function (ev) {
+        var views = containers[this],
+            appeared = [];
+        _(views).each(function (view) {
+          if (!belowTheFold(view.el, settings) && !rightOfFold(view.el, settings)) {
+            view.trigger("appear");
+            appeared.push(view);
+          }
+        });
+        containers[this] = _.filter(views, function (view) {
+          return _.indexOf(views, view) != -1;
+        });
+        if (!containers[this]) {
+          this.unbind("scroll");
+        }
+      });
+    }
+    containers[settings.container].push(this);
   };
   Backbone.LazyView.extend = Backbone.View.extend;
   _.extend(Backbone.LazyView.prototype, Backbone.View.prototype);
@@ -37,19 +67,5 @@
                $(window).width() + $(window).scrollLeft() :
                $(container).offset().left + $(container).width();
     return fold <= $(element).offset().left - settings.threshold;
-  };
-  var aboveTheTop = function (element, settings) {
-    var container = settings.container,
-        fold = checkContainer(container) ?
-               $(window).scrollTop() :
-               $(container).offset().top;
-    return fold >= $(element).offset().top + settings.threshold + $(element).height();
-  };
-  var leftToBegin = function (element, settings) {
-    var container = settings.container,
-        fold = checkContainer(container) ?
-               $(window).scrollLeft() :
-               $(container).offset().left;
-    return fold >= $(element).offset().left + settings.threshold + $(element).width();
   };
 })(jQuery, _, Backbone);
