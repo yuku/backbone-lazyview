@@ -21,8 +21,7 @@ Include required js libraries and lazyview.js in your HTML code.
 ```
 
 Then *Backbone.LazyView* constructor is added to the Backbone's namespace.
-The interface of the cunstructor is same as *Backbone.View*'s interface.
-**appear** event will be triggered, so you can catch the event and invoke a function as follows.
+The interface of the cunstructor is same as *Backbone.View*'s interface, so you can catch the **appear** event and invoke a function as follows.
 
 ```js
 var FooLazyView = Backbone.LazyView.extend({
@@ -34,6 +33,7 @@ var FooLazyView = Backbone.LazyView.extend({
         /* do something */
     }
 });
+var view = new FooLazyView({el: $("#element")});
 ```
 
 enjoy!
