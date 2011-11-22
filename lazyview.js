@@ -5,15 +5,14 @@
  *
  * Licensed under the MIT license.
  * 
- * Version: 0.1.0
+ * Version: 0.1.1
  */
 ;(function ($, _, Backbone) {
-  containers = {};
+  var containers = {};
 
   Backbone.LazyView = function (options) {
     var settings = {
       threshold: 0,
-      filurelimit: 0,
       container: window
     };
     _.extend(settings, options);
