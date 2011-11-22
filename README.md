@@ -27,9 +27,11 @@ The interface of the cunstructor is same as *Backbone.View*'s interface.
 ```js
 var FooLazyView = Backbone.LazyView.extend({
     initialize: function () {
-        this.bind("appear", function () {
-            /* do something */
-        });
+        _.bindAll(this, "appear");
+        this.bind("appear", this.appear);
+    },
+    appear: function () {
+        /* do something */
     }
 });
 ```
