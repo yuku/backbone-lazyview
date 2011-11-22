@@ -1,3 +1,9 @@
-Lazy Backbone.js
-================
-Backbone plugin for triggering "appear" event on view objects.
+LazyView
+========
+Extended Backbone.View for lazy loading.
+
+Requirements
+------------
+jQuery
+underscore.js
+Backbone.js
