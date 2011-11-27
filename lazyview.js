@@ -5,7 +5,7 @@
  *
  * Licensed under the MIT license.
  * 
- * Version: 0.1.1
+ * Version: 0.1.2
  */
 ;(function ($, _, Backbone) {
   var containers = {};
@@ -36,6 +36,7 @@
         });
         if (containers[this].length == 0) {
           $(this).unbind("scroll");
+          delete containers[this];
         }
       });
     }
