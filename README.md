@@ -1,15 +1,9 @@
-#LazyView
+#What is this?
 
-Backbone.LazyView is a Backbone plugin writtern in JavaScript.
-It watches the **scroll** event of the *window* and trigger an **appear** on the object when it's *el* property appeared on the screen.
+**backbone-lazyview** is a Backbone plugin writtern in JavaScript.
+It watches the **scroll** event of the *window* object and trigger an event named **appear** on it when it's *el* property appeared on the screen.
 
-##Requirements
-
-* jQuery
-* underscore.js
-* Backbone.js
-
-##How to use?
+#How to use?
 
 Include required js libraries and lazyview.js in your HTML code.
 
@@ -20,14 +14,16 @@ Include required js libraries and lazyview.js in your HTML code.
 <script src="lazyview.js"></script>
 ```
 
-Then *Backbone.LazyView* constructor is added to the Backbone's namespace.
-The interface of the cunstructor is same as *Backbone.View*'s interface, so you can catch the **appear** event and invoke a function as follows.
+Then *LazyView* is added to the Backbone's original namespace.
+You can catch the **appear** event and invoke a function as follows.
 
 ```js
 var FooLazyView = Backbone.LazyView.extend({
+    events: {
+        "appear": "appear"
+    },
     initialize: function () {
         _.bindAll(this, "appear");
-        this.bind("appear", this.appear);
     },
     appear: function () {
         /* do something */
