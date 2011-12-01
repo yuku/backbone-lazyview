@@ -5,7 +5,7 @@
  *
  * Licensed under the MIT license.
  * 
- * Version: 0.1.2
+ * Version: 0.1.3
  */
 ;(function ($, _, Backbone) {
   var containers = {};
@@ -27,7 +27,7 @@
             appeared = [];
         _(views).each(function (view) {
           if (!belowTheFold(view.el, settings) && !rightOfFold(view.el, settings)) {
-            view.trigger("appear");
+            $(view.el).trigger("appear.delegateEvents" + view.cid);
             appeared.push(view);
           }
         });
