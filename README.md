@@ -1,7 +1,7 @@
 #What is this?
 
 **backbone-lazyview** is a Backbone plugin writtern in JavaScript.
-It watches the **scroll** event of the *window* object and trigger an event named **appear** on it when it's *el* property appeared on the screen.
+It watches the **scroll** event of the *window* object and trigger an event named **appear** on a lazyview object when it's *el* property appeared on the screen.
 
 #How to use?
 
