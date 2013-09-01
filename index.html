@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Backbone.LazyView</title>
+        <link rel="stylesheet" href="media/stylesheets/bootstrap.css" />
+        <link rel="stylesheet" href="media/stylesheets/font-awesome.css" />
+        <link rel="stylesheet" href="media/stylesheets/main.css" />
+        <script src="media/javascripts/jquery-2.0.3.js"></script>
+        <script src="media/javascripts/underscore.js"></script>
+        <script src="media/javascripts/backbone.js"></script>
+        <script src="backbone.lazyview.js"></script>
+        <script src="media/javascripts/main.js"></script>
+    </head>
+    <body>
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <div class="page-header">
+                            <h1>
+                                Backbone.LazyView
+                                <small>Extended Backbone.View for lazy loading</small>
+                            </h1>
+                        </div>
+                        <a href="https://github.com/yuku-t/backbone-lazyview" class="btn btn-default btn-large">
+                            <i class="icon-github"></i>
+                            Fork me on GitHub.
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span12">
+                        <h2>Demo</h2>
+                        <pre>
+var LazyView = Backbone.LazyView.extend({
+  events: {
+    appear: function () {
+      $('#output').append('&lt;br/&gt;' + this.options.name + ' appears');
+    }
+  }
+});
+new LazyView({ el: '#view1', name: 'view1' });
+new LazyView({ el: '#view2', name: 'view2', threshold: 50 });
+new LazyView({ el: '#view3', name: 'view3', threshold: -100 });</pre>
+                        <pre id="output">#output</pre>
+                    </div>
+                    <div class="padding">&nbsp;</div>
+                </div>
+                <div class="row">
+                    <div class="span4">
+                        <div id="view1">#view1</div>
+                    </div>
+                    <div class="span4">
+                        <div id="view2">#view2</div>
+                    </div>
+                    <div class="span4">
+                        <div id="view3">#view3</div>
+                    </div>
+                </div>
+            </div>
+            </section>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="span12">
+                        <p>Created by <a href="https://github.com/yuku-t">Yuku Takahashi</a>.</p>
+                        <p>Licensed under <a href="http://opensource.org/licenses/MIT">MIT</a> with starring the
+                        <a
+                            href="https://github.com/yuku-t/backbone-lazyview">repository</a>
+                        at GitHub,
+                        OR <a href="http://opensource.org/licenses/GPL-2.0">GPL</a> without starring.
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
