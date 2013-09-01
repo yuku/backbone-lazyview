@@ -4,6 +4,7 @@
         <title>Backbone.LazyView</title>
         <link rel="stylesheet" href="media/stylesheets/bootstrap.css" />
         <link rel="stylesheet" href="media/stylesheets/font-awesome.css" />
+        <link rel="stylesheet" href="media/stylesheets/syntax.css" />
         <link rel="stylesheet" href="media/stylesheets/main.css" />
         <script src="media/javascripts/jquery-2.0.3.js"></script>
         <script src="media/javascripts/underscore.js"></script>
@@ -32,16 +33,17 @@
                     <div class="span12">
                         <h2>Demo</h2>
                         <pre>
-var LazyView = Backbone.LazyView.extend({
-  events: {
-    appear: function () {
-      $('#output').append('&lt;br/&gt;' + this.options.name + ' appears');
-    }
-  }
-});
-new LazyView({ el: '#view1', name: 'view1' });
-new LazyView({ el: '#view2', name: 'view2', threshold: 50 });
-new LazyView({ el: '#view3', name: 'view3', threshold: -100 });</pre>
+<span class="kd">var</span> <span class="nx">LazyView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">LazyView</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+    <span class="nx">events</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">appear</span><span class="o">:</span> <span class="s1">'appearHandler'</span>
+    <span class="p">},</span>
+    <span class="nx">appearHandler</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">'#output'</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">'&lt;br/&gt;'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">' appears'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+<span class="k">new</span> <span class="nx">LazyView</span><span class="p">({</span> <span class="nx">el</span><span class="o">:</span> <span class="s1">'#view1'</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'view1'</span> <span class="p">});</span>
+<span class="k">new</span> <span class="nx">LazyView</span><span class="p">({</span> <span class="nx">el</span><span class="o">:</span> <span class="s1">'#view2'</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'view2'</span><span class="p">,</span> <span class="nx">threshold</span><span class="o">:</span> <span class="mi">50</span> <span class="p">});</span>
+<span class="k">new</span> <span class="nx">LazyView</span><span class="p">({</span> <span class="nx">el</span><span class="o">:</span> <span class="s1">'#view3'</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'view3'</span><span class="p">,</span> <span class="nx">threshold</span><span class="o">:</span> <span class="o">-</span><span class="mi">100</span> <span class="p">});</span></pre>
                         <pre id="output">#output</pre>
                     </div>
                     <div class="padding">&nbsp;</div>
