@@ -1,50 +1,63 @@
-/*
- * LazyView - extended Backbone.View for lazy loading
+/*!
+ * Backbone.LazyView - extended Backbone.View for lazy loading
  *
- * (c) 2011 Yuku Takahashi
- *
- * Licensed under the MIT license.
- * 
- * Version: 0.1.3
+ * Version : 1.0
+ * Author  : Yuku Takahashi
+ * Lisence : MIT license with starring the repository at GitHub,
+ *           OR GPL without starring.
  */
 ;(function ($, _, Backbone) {
-  var containers = {};
 
-  Backbone.LazyView = function (options) {
-    var settings = {
-      threshold: 0,
-      container: window
-    };
-    _.extend(settings, options);
-    Backbone.View.call(this, options);
+  var containers = {}; // Shared containers
 
-    if (!(settings.container in containers)) {
-      containers[settings.container] = [];
+  Backbone.LazyView = Backbone.View.extend({
 
-      // Fire one scroll event per scroll.
-      $(settings.container).bind("scroll", function (ev) {
-        var views = containers[this],
-            appeared = [];
-        _(views).each(function (view) {
-          if (!belowTheFold(view.el, settings) && !rightOfFold(view.el, settings)) {
-            $(view.el).trigger("appear.delegateEvents" + view.cid);
-            appeared.push(view);
-          }
-        });
-        containers[this] = _.filter(views, function (view) {
-          return _.indexOf(appeared, view) == -1;
-        });
-        if (containers[this].length == 0) {
-          $(this).unbind("scroll");
-          delete containers[this];
+    constructor: function () {
+      Backbone.View.apply(this, arguments);
+      this.onScrollHandler();  // Trigger appear on initially shown views
+    },
+
+    initialize: function () {
+      Backbone.View.prototype.initialize.apply(this, arguments);
+
+      this.options = _.defaults(this.options, {
+        threshold: 0,
+        container: window
+      });
+      _.bindAll(this, 'onScrollHandler');
+      this.delegateAppearEvent();
+    },
+
+    onScrollHandler: function () {
+      _.each(containers[this.options.container], function (view) {
+        if (!belowTheFold(view.$el, view.options) &&
+            !rightOfFold(view.$el, view.options)) {
+          view.$el.trigger("appear.delegateEvents" + view.cid);
+          view.undelegateAppearEvent();
         }
       });
-    }
-    containers[settings.container].push(this);
-  };
-  Backbone.LazyView.extend = Backbone.View.extend;
-  _.extend(Backbone.LazyView.prototype, Backbone.View.prototype);
+    },
 
+    delegateAppearEvent: function () {
+      if (!(this.options.container in containers)) {
+        // Register scroll handler to container element.
+        containers[this.options.container] = [];
+        $(this.options.container)
+          .on('scroll', _.throttle(this.onScrollHandler, Backbone.LazyView.throttle));
+      }
+      containers[this.options.container].push(this);
+    },
+
+    undelegateAppearEvent: function () {
+      containers[this.options.container] =
+        _.filter(containers[this.options.container], function (view) {
+          return view !== this
+        }, this);
+    }
+  }, {
+    // Check appearance once in throttle msec.
+    throttle: 10
+  });
 
   /**
    * Convenience functions such as defined in ``jquery.lazyload.js``
@@ -52,21 +65,28 @@
    * jquery.lazyload.js project home:
    *   http:www.appelsiini.net/projects/lazyload
    */
+  var $window = $(window);
   var checkContainer = function (container) {
     return _.isUndefined(container) || container === window;
   };
-  var belowTheFold = function (element, settings) {
-    var container = settings.container,
-        fold = checkContainer(container) ?
-               $(window).height() + $(window).scrollTop() :
-               $(container).offset().top + $(container).height();
-    return fold <= $(element).offset().top - settings.threshold;
+  var belowTheFold = function ($element, options) {
+    var $container, fold;
+    if (checkContainer(options.container)) {
+      fold = $window.height() + $window.scrollTop();
+    } else {
+      $container = $(options.container);
+      fold = $container.offset().top + $container.height();
+    }
+    return fold <= $element.offset().top - options.threshold;
   };
-  var rightOfFold = function (element, settings) {
-    var container = settings.container,
-        fold = checkContainer(container) ?
-               $(window).width() + $(window).scrollLeft() :
-               $(container).offset().left + $(container).width();
-    return fold <= $(element).offset().left - settings.threshold;
+  var rightOfFold = function ($element, options) {
+    var $container, fold;
+    if (checkContainer(options.container)) {
+      fold = $window.width() + $window.scrollLeft();
+    } else {
+      $container = $(options.container);
+      fold = $container.offset().left + $container.width();
+    }
+    return fold <= $element.offset().left - options.threshold;
   };
 })(jQuery, _, Backbone);
