@@ -3,8 +3,7 @@
  *
  * Version : 1.0
  * Author  : Yuku Takahashi
- * Lisence : MIT license with starring the repository at GitHub,
- *           OR GPL without starring.
+ * Lisence : MIT
  */
 ;(function ($, _, Backbone) {
 

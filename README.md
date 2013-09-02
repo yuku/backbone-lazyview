@@ -32,4 +32,4 @@ See [Demo](http://yuku-t.com/backbone-lazyview).
 
 ## License
 
-Licensed under MIT with starring the repository at GitHub, OR GPL without starring.
+Licensed under MIT
